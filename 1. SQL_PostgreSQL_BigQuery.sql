@@ -1,10 +1,7 @@
 -- Big project for SQL
 -- Link instruction: https://docs.google.com/spreadsheets/d/1WnBJsZXj_4FDi2DyfLH1jkWtfTridO2icWbWCh7PLs8/edit#gid=0
 
-
-
 -- Query 01: calculate total visit, pageview, transaction and revenue for Jan, Feb and March 2017 order by month
-
 
 #standardSQL
 
@@ -15,7 +12,6 @@ group by month
 order by month;
 
 -- Query 02: Bounce rate per traffic source in July 2017
-
 
 #standardSQ
 SELECT trafficSource.source AS source,count(concat(fullVisitorId,visitId)) as total_visits, sum(totals.bounces) as total_no_of_bounces, sum(totals.bounces)/count(concat(fullVisitorId,visitId)) as bounce_rate
@@ -49,14 +45,8 @@ AND extract(week from (parse_date('%Y%m%d',date))) > 20
 group by time, time_type , source
 ORDER BY source, time
 
-
 --Query 04: Average number of product pageviews by purchaser type (purchasers vs non-purchasers) in June, July 2017. Note: totals.transactions >=1 for purchaser and totals.transactions is null for non-purchaser
 #standardSQL
-
-
-
-
-
 
 #standardSQL
 SELECT table1.month,avg_pageviews_purchase,avg_pageviews_non_purchase
@@ -84,8 +74,6 @@ WHERE _table_suffix between '20170701' and '20170731'
 AND totals.transactions >=1 
 GROUP BY month
 
-
-
 -- Query 06: Average amount of money spent per session
 
 #standardSQL
@@ -96,7 +84,7 @@ GROUP BY month
 
 -- Query 07: Products purchased by customers who purchased product A (Classic Ecommerce)
 
-
+#standardSQL
 with sub1 as (
     SELECT fullVisitorId, v2ProductName, 
     FROM `bigquery-public-data.google_analytics_sample.ga_sessions_201707*`
@@ -116,10 +104,9 @@ AND v2ProductName != "YouTube Men's Vintage Henley"
 GROUP BY v2ProductName
 GROUP BY quantity desc;
 
-
 --Query 08: Calculate cohort map from pageview to addtocart to purchase in last 3 month. For example, 100% pageview then 40% add_to_cart and 10% purchase.
-#standardSQL
 
+#standardSQL
 with sub1 as (
  SELECT 
      format_date("%Y%m",parse_date("%Y%m%d",date)) as month,
